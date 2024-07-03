@@ -42,10 +42,10 @@ set_seed(0)
 # --------------------------读取数据--------------------------
 
 
-train_path = 'datasets/train_dataset.csv'  # 自定义训练集路径
+train_path = '../T5_datasets/train_dataset.csv'  # 自定义训练集路径
 train= pd.read_csv(train_path, sep='\t', names=["Index", "Text", "Abstract"])
 
-test_path = 'datasets/test_dataset.csv'  # 自定义测试集路径
+test_path = '../T5_datasets/test_dataset.csv'  # 自定义测试集路径
 test = pd.read_csv(test_path, sep='\t', names=["Index", "Text"]) # 假设测试集没有'Abstract'列
 
 
@@ -152,15 +152,15 @@ for idx, article_text in tqdm(enumerate(test["Text"]), total=1000):
     )
     sumaries.append([idx,summary])
 
-csv_file_path = 'datasets/submit1.csv'
+csv_file_path = '../T5_datasets/submit1.csv'
 with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
     write = csv.writer(csvfile)
     write.writerows(sumaries)
 
 #重写文件
 import csv
-with open('datasets/submit1.csv', 'r', newline='', encoding='utf-8') as f1:
-    with open('datasets/newsub.csv', 'w', newline='', encoding='utf-8') as f2:
+with open('../T5_datasets/submit1.csv', 'r', newline='', encoding='utf-8') as f1:
+    with open('T5_datasets/newsub.csv', 'w', newline='', encoding='utf-8') as f2:
         reader = csv.reader(f1)
         w = csv.writer(f2,delimiter='\t')
         for row in reader:
