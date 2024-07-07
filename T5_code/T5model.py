@@ -112,51 +112,6 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name) #加载T5模型
 
 
 
-# # --------------------------训练-------------------------
-#
-# multi_sample =500  #训练集数量
-# sumaries =list()  #摘要结果
-# # 使用tqdm显示进度条
-# for idx,article_text in tqdm(enumerate(train["Text"][0:500]),total=multi_sample):
-#     # 使用tokenizer对输入文本进行编码
-#     input_ids = tokenizer(
-#     [WHITESPACE_HANDLER(article_text)],
-#     return_tensors="pt",
-#     padding="max_length",
-#     truncation=True,
-#     max_length=512
-#     )["input_ids"]
-#
-#     # 使用模型生成输出文本
-#     output_ids = model.generate(
-#         input_ids=input_ids,
-#         max_length=512,
-#         min_length=int(len(article_text)/32),
-#         no_repeat_ngram_size=3,
-#         num_beams=5
-#     )[0]
-#
-#     # 对输出文本进行解码
-#     summary = tokenizer.decode(
-#         output_ids,
-#         skip_special_tokens=True,
-#         clean_up_tokenization_spaces=False
-#     )
-#     # 将生成的摘要添加到训练数据集中
-#     train.loc[idx,"summary"] = summary
-#     print(idx+500,summary)
-#     # 将生成的摘要添加到sumaries列表中
-#     sumaries.append([idx+500,summary])
-#
-# # 创建csv文件路径
-# csv_file_path = 'datasets/submit.csv'
-# # 打开csv文件
-# with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
-#     # 创建csv写入对象
-#     write = csv.writer(csvfile)
-#     # 将sumaries列表写入csv文件
-#     write.writerows(sumaries)
-
 # --------------------------预测-------------------------
 # 定义一个空列表，用于存储预测结果
 sumaries =list()
@@ -190,7 +145,7 @@ for idx, article_text in tqdm(enumerate(test["Text"]), total=1000):
     sumaries.append([idx,summary])
 
 # 定义保存结果的文件路径
-csv_file_path = '../T5_datasets/submit1.csv'
+csv_file_path = '../T5_datasets/submission.csv'
 # 使用with open函数，打开文件，并指定编码格式
 with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
     # 使用write函数，将预测结果写入文件
@@ -200,8 +155,8 @@ with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
 
 #重写文件：改写为提交文件格式
 import csv
-with open('../T5_datasets/submit1.csv', 'r', newline='', encoding='utf-8') as f1:
-    with open('T5_datasets/newsub.csv', 'w', newline='', encoding='utf-8') as f2:
+with open('../T5_datasets/submission.csv', 'r', newline='', encoding='utf-8') as f1:
+    with open('T5_datasets/submission_format.csv', 'w', newline='', encoding='utf-8') as f2:
         reader = csv.reader(f1)
         w = csv.writer(f2,delimiter='\t')
         for row in reader:

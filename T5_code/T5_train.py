@@ -12,7 +12,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, DataCollatorForSe
 from datasets import Dataset
 
 # 预处理训练集
-train_path = '../T5_datasets/train_dataset1.csv'  # 自定义训练集路径
+train_path = '../T5_datasets/train_dataset.csv'  # 自定义训练集路径
 train = pd.read_csv(train_path, sep='\t', names=["Index", "Text", "Abstract"])
 train_dataset = Dataset.from_pandas(train)
 
